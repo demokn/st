@@ -132,17 +132,24 @@ static const char *colorname[] = {
 	"#555555",  /* 257 -> rev cursor*/
 	"black",    /* 258 -> bg */
     "gray90",   /* 259 -> fg */
+    "gray90",   /* 260 -> selection bg */
+	"black",    /* 261 -> selection fg */
 };
 
 
 /*
  * Default colors (colorname index)
- * foreground, background, cursor, reverse cursor
+ * foreground, background, cursor, reverse cursor, selection
  */
 unsigned int defaultfg = 259;
 unsigned int defaultbg = 258;
 static unsigned int defaultcs = 256;
 static unsigned int defaultrcs = 257;
+unsigned int selectionbg = 260;
+unsigned int selectionfg = 261;
+/* If 0 use selectionfg as foreground in order to have a uniform foreground-color */
+/* Else if 1 keep original foreground-color of each cell => more colors :) */
+static int ignoreselfg = 1;
 
 /*
  * Default shape of cursor
@@ -206,6 +213,8 @@ ResourcePref resources[] = {
 		{ "revCursorColor",  STRING,  &colorname[257] },
 		{ "background",   STRING,  &colorname[258] },
 		{ "foreground",   STRING,  &colorname[259] },
+		{ "selbgcolor",   STRING,  &colorname[260] },
+		{ "selfgcolor",   STRING,  &colorname[261] },
 		{ "termname",     STRING,  &termname },
 		{ "shell",        STRING,  &shell },
 		{ "minlatency",   INTEGER, &minlatency },
