@@ -1,11 +1,11 @@
 diff --git a/config.def.h b/config.def.h
-index e53cc6f..7f8161a 100644
+index 46af81d..fd66ceb 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -130,17 +130,23 @@ static const char *colorname[] = {
- 	"#cccccc",
+@@ -131,17 +131,23 @@ static const char *colorname[] = {
  	"#555555",
- 	"black",
+ 	"gray90", /* default foreground colour */
+ 	"black", /* default background colour */
 +    "#2e3440",
  };
  
@@ -15,12 +15,12 @@ index e53cc6f..7f8161a 100644
 - * foreground, background, cursor, reverse cursor
 + * foreground, background, cursor, reverse cursor, selection
   */
- unsigned int defaultfg = 7;
- unsigned int defaultbg = 258;
- static unsigned int defaultcs = 256;
+ unsigned int defaultfg = 258;
+ unsigned int defaultbg = 259;
+ unsigned int defaultcs = 256;
  static unsigned int defaultrcs = 257;
-+unsigned int selectionbg = 257;
-+unsigned int selectionfg = 7;
++unsigned int selectionbg = 260;
++unsigned int selectionfg = 258;
 +/* If 0 use selectionfg as foreground in order to have a uniform foreground-color */
 +/* Else if 1 keep original foreground-color of each cell => more colors :) */
 +static int ignoreselfg = 1;
@@ -28,7 +28,7 @@ index e53cc6f..7f8161a 100644
  /*
   * Default shape of cursor
 diff --git a/st.h b/st.h
-index f2bc024..5f9fb1e 100644
+index a2fd233..1820712 100644
 --- a/st.h
 +++ b/st.h
 @@ -33,6 +33,7 @@ enum glyph_attribute {
@@ -40,10 +40,10 @@ index f2bc024..5f9fb1e 100644
  };
  
 diff --git a/x.c b/x.c
-index 95ca152..cac2612 100644
+index 952721b..b245588 100644
 --- a/x.c
 +++ b/x.c
-@@ -1560,6 +1560,12 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
+@@ -1589,6 +1589,12 @@ xdrawglyphfontspecs(const XftGlyphFontSpec *specs, Glyph base, int len, int x, i
  		bg = temp;
  	}
  
@@ -56,7 +56,7 @@ index 95ca152..cac2612 100644
  	if (base.mode & ATTR_BLINK && win.mode & MODE_BLINK)
  		fg = bg;
  
-@@ -1626,7 +1632,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+@@ -1655,7 +1661,7 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
  
  	/* remove the old cursor */
  	if (selected(ox, oy))
@@ -65,7 +65,7 @@ index 95ca152..cac2612 100644
  	xdrawglyph(og, ox, oy);
  
  	if (IS_SET(MODE_HIDE))
-@@ -1639,23 +1645,13 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
+@@ -1668,23 +1674,13 @@ xdrawcursor(int cx, int cy, Glyph g, int ox, int oy, Glyph og)
  
  	if (IS_SET(MODE_REVERSE)) {
  		g.mode |= ATTR_REVERSE;
@@ -94,7 +94,7 @@ index 95ca152..cac2612 100644
  	}
  
  	/* draw the new one */
-@@ -1760,7 +1756,7 @@ xdrawline(Line line, int x1, int y1, int x2)
+@@ -1791,7 +1787,7 @@ xdrawline(Line line, int x1, int y1, int x2)
  		if (new.mode == ATTR_WDUMMY)
  			continue;
  		if (selected(x, y1))

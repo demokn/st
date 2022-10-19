@@ -1,18 +1,8 @@
-From 2752a599ee01305a435729bfacf43b1dde7cf0ef Mon Sep 17 00:00:00 2001
-From: Benji Encalada Mora <benji@encalada.dev>
-Date: Thu, 4 Jun 2020 00:41:10 -0500
-Subject: [PATCH] fix: replace xfps and actionfps variables
-
----
- config.def.h | 36 ++++++++++++++++++++++++
- x.c          | 78 +++++++++++++++++++++++++++++++++++++++++++++++++---
- 2 files changed, 110 insertions(+), 4 deletions(-)
-
 diff --git a/config.def.h b/config.def.h
-index 6f05dce..9b99782 100644
+index 91ab8ca..20f1c88 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -168,6 +168,42 @@ static unsigned int defaultattr = 11;
+@@ -170,6 +170,42 @@ static unsigned int defaultattr = 11;
   */
  static uint forcemousemod = ShiftMask;
  
@@ -56,7 +46,7 @@ index 6f05dce..9b99782 100644
   * Internal mouse shortcuts.
   * Beware that overloading Button1 will disable the selection.
 diff --git a/x.c b/x.c
-index 210f184..76f167f 100644
+index 2a3bd38..dcca8e7 100644
 --- a/x.c
 +++ b/x.c
 @@ -14,6 +14,7 @@
@@ -87,7 +77,7 @@ index 210f184..76f167f 100644
  /* X modifiers */
  #define XK_ANY_MOD    UINT_MAX
  #define XK_NO_MOD     0
-@@ -828,8 +842,8 @@ xclear(int x1, int y1, int x2, int y2)
+@@ -859,8 +873,8 @@ xclear(int x1, int y1, int x2, int y2)
  void
  xhints(void)
  {
@@ -98,7 +88,7 @@ index 210f184..76f167f 100644
  	XWMHints wm = {.flags = InputHint, .input = 1};
  	XSizeHints *sizeh;
  
-@@ -1104,8 +1118,6 @@ xinit(int cols, int rows)
+@@ -1135,8 +1149,6 @@ xinit(int cols, int rows)
  	pid_t thispid = getpid();
  	XColor xmousefg, xmousebg;
  
@@ -107,7 +97,7 @@ index 210f184..76f167f 100644
  	xw.scr = XDefaultScreen(xw.dpy);
  	xw.vis = XDefaultVisual(xw.dpy, xw.scr);
  
-@@ -1964,6 +1976,59 @@ run(void)
+@@ -2011,6 +2023,59 @@ run(void)
  	}
  }
  
@@ -167,7 +157,7 @@ index 210f184..76f167f 100644
  void
  usage(void)
  {
-@@ -2037,6 +2102,11 @@ run:
+@@ -2084,6 +2149,11 @@ run:
  
  	setlocale(LC_CTYPE, "");
  	XSetLocaleModifiers("");
@@ -179,6 +169,3 @@ index 210f184..76f167f 100644
  	cols = MAX(cols, 1);
  	rows = MAX(rows, 1);
  	tnew(cols, rows);
--- 
-2.26.2
-

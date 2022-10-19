@@ -1,8 +1,8 @@
 diff --git a/st.c b/st.c
-index 00a9220..00511d3 100644
+index aba015b..7cd0f55 100644
 --- a/st.c
 +++ b/st.c
-@@ -732,8 +732,14 @@ sigchld(int a)
+@@ -725,8 +725,14 @@ sigchld(int a)
  	if ((p = waitpid(pid, &stat, WNOHANG)) < 0)
  		die("waiting for pid %hd failed: %s\n", pid, strerror(errno));
  
@@ -18,7 +18,7 @@ index 00a9220..00511d3 100644
  
  	if (WIFEXITED(stat) && WEXITSTATUS(stat))
  		die("child exited with status %d\n", WEXITSTATUS(stat));
-@@ -2003,6 +2009,59 @@ strparse(void)
+@@ -2048,6 +2054,59 @@ strparse(void)
  	}
  }
  
@@ -79,7 +79,7 @@ index 00a9220..00511d3 100644
  strdump(void)
  {
 diff --git a/st.h b/st.h
-index 51f6da8..f2bc024 100644
+index 64e4b48..a2fd233 100644
 --- a/st.h
 +++ b/st.h
 @@ -83,6 +83,7 @@ void draw(void);

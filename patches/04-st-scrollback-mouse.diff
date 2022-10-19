@@ -1,8 +1,8 @@
 diff --git a/config.def.h b/config.def.h
-index 37d2815..b9fb7ff 100644
+index 535e0fd..5f0e1e6 100644
 --- a/config.def.h
 +++ b/config.def.h
-@@ -220,6 +220,8 @@ ResourcePref resources[] = {
+@@ -221,6 +221,8 @@ ResourcePref resources[] = {
   */
  static MouseShortcut mshortcuts[] = {
  	/* mask                 button   function        argument       release */
